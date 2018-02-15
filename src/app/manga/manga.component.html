@@ -1,0 +1,8 @@
+<div *ngIf="manga | async; let manga">
+	
+	<p>Nom du manga : {{ manga.name }}</p>
+	<p>Auteur du manga : {{ manga.author }}</p>
+
+	<div *ngIf="manga.descriptionLoading">LOADING DESCRIPTION</div>
+	<div *ngIf="!(manga.descriptionLoading)">{{ manga.description }}</div>
+</div>
