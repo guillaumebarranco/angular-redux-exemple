@@ -1,10 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import { NgReduxModule, NgRedux } from '@angular-redux/store';
+import { NgReduxModule, NgRedux, DevToolsExtension  } from '@angular-redux/store';
 import { createLogger } from 'redux-logger';
 
-import { IAppState, initalState } from './store/state';
+import { IAppState, initialState } from './store/state';
 import { rootReducer } from './store/reducers';
 
 import { AppComponent } from './app.component';
@@ -25,7 +25,22 @@ import { MangaService } from './manga/manga.service';
 })
 
 export class AppModule {
-  constructor(ngRedux: NgRedux<IAppState>) {
-    ngRedux.configureStore(rootReducer, initalState, [ createLogger() ]);
+  constructor(
+    private ngRedux: NgRedux<IAppState>,
+    private devTools: DevToolsExtension) {
+
+    let enhancers = [];
+    // ... add whatever other enhancers you want.
+
+    // You probably only want to expose this tool in devMode.
+    if (devTools.isEnabled()) {
+      enhancers = [ ...enhancers, devTools.enhancer() ];
+    }
+
+    this.ngRedux.configureStore(
+      rootReducer,
+      initialState,
+      [],
+      enhancers);
   }
 }

@@ -16,6 +16,6 @@ export interface IAppState {
 	manga: MangaState;
 };
 
-export const initalState: IAppState = {
+export const initialState: IAppState = {
 	manga: mangaInitialState,
 };
